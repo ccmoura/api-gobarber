@@ -3,7 +3,6 @@ import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
 import Appointment from '../infra/typeorm/entities/Appointment';
-import AppointmentsRepository from '../repositories/AppointmentsRepository';
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
 
 interface IRequest {
@@ -29,7 +28,7 @@ export default class CreateAppointmentService {
         );
 
         if (findAppointmentInSameDate) {
-            throw AppError('This appointment is already booked');
+            throw new AppError('This appointment is already booked');
         }
 
         const appointment = await this.appointmentsRepository.create({
