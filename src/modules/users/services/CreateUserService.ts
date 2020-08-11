@@ -18,7 +18,7 @@ export default class CreateUserService {
     ) {}
 
     public async execute({ name, email, password }: IRequest): Promise<User> {
-        const checkUserExists = await this.userRepository.findByEmail(email);
+        const checkUserExists = await this.usersRepository.findByEmail(email);
 
         if (checkUserExists) {
             throw new AppError('Email address already used.');
@@ -26,7 +26,7 @@ export default class CreateUserService {
 
         const hashedPassword = await hash(password, 8);
 
-        const user = await this.userRepository.create({
+        const user = await this.usersRepository.create({
             name,
             email,
             password: hashedPassword,
